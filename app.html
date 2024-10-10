@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>App</title>
+    <style>
+        body {
+            background-color: blue;
+        }
+        #ball {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <img id="ball" src="SoccerBall.png" alt="soccer ball">
+    <script>
+        document.getElementById("ball").style.left = "20px";
+        document.getElementById("ball").style.top = "20px";
+        function MoveBall(event) {
+            const speed = 10;
+            let element = event.target;
+            let elementInfo = element.getBoundingClientRect();
+            let relX = event.clientX - elementInfo.x;
+            let relY = event.clientY - elementInfo.y;
+            
+            // Move ball
+            if (relX < elementInfo.width / 3)
+                element.style.left = (parseInt(element.style.left) + speed) + "px";
+            else if (relX > elementInfo.width * 2 / 3)
+                element.style.left = parseInt(element.style.left) - speed + "px";
+            if (relY < elementInfo.height / 3)
+                element.style.top = parseInt(element.style.top) + speed + "px";
+            else if (relY > elementInfo.height * 2 / 3)
+                element.style.top = parseInt(element.style.top) - speed + "px";
+            
+            // Limit
+            if (parseInt(element.style.left) < 0)
+                element.style.left = "0px";
+            else if (parseInt(element.style.left) > window.innerWidth - element.width)
+                element.style.left = (window.innerWidth - element.width) + "px";
+            if (parseInt(element.style.top) < 0)
+                element.style.top = "0px";
+            else if (parseInt(element.style.top) > window.innerHeight - element.height)
+                element.style.top = (window.innerHeight - element.height) + "px";
+        }
+        function Refined() {
+            let element = document.getElementById("ball");
+            if (parseInt(element.style.left) < 0)
+                element.style.left = "0px";
+            else if (parseInt(element.style.left) > window.innerWidth - element.width)
+                element.style.left = (window.innerWidth - element.width) + "px";
+            if (parseInt(element.style.top) < 0)
+                element.style.top = "0px";
+            else if (parseInt(element.style.top) > window.innerHeight - element.height)
+                element.style.top = (window.innerHeight - element.height) + "px";
+        }
+        document.getElementById("ball").addEventListener("mousemove", MoveBall);
+        addEventListener("resize", Refined)
+    </script>
+</body>
+</html>
